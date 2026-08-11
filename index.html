@@ -428,7 +428,7 @@
       <div class="job current">
         <div class="job-head">
           <div><span class="job-title">Tech Lead</span> · <span class="job-company">Virtual Economy Technology Sdn Bhd</span></div>
-          <div class="job-dates">Apr 2025 – Present</div>
+          <div class="job-dates" data-start="2025-04" data-end="present">Apr 2025 – Present</div>
         </div>
         <ul>
           <li>Act as primary technical liaison across engineering, product, and business teams, keeping delivery aligned with client and business objectives</li>
@@ -447,7 +447,7 @@
       <div class="job">
         <div class="job-head">
           <div><span class="job-title">Senior Backend Developer</span> · <span class="job-company">Virtual Economy Technology Sdn Bhd</span></div>
-          <div class="job-dates">Jul 2022 – Mar 2025</div>
+          <div class="job-dates" data-start="2022-07" data-end="2025-03">Jul 2022 – Mar 2025</div>
         </div>
         <ul>
           <li>Designed and developed backend services and APIs with a focus on performance, reliability, and scalability</li>
@@ -464,7 +464,7 @@
       <div class="job">
         <div class="job-head">
           <div><span class="job-title">Backend Developer</span> · <span class="job-company">Devace Sdn. Bhd. (Xtremax)</span></div>
-          <div class="job-dates">Sep 2021 – Jun 2022</div>
+          <div class="job-dates" data-start="2021-09" data-end="2022-06">Sep 2021 – Jun 2022</div>
         </div>
         <ul>
           <li>Investigated logs to identify root causes of production incidents</li>
@@ -481,7 +481,7 @@
       <div class="job">
         <div class="job-head">
           <div><span class="job-title">Backend Developer</span> · <span class="job-company">Hash Code Book Sdn Bhd</span></div>
-          <div class="job-dates">Oct 2020 – Sep 2021</div>
+          <div class="job-dates" data-start="2020-10" data-end="2021-09">Oct 2020 – Sep 2021</div>
         </div>
         <ul>
           <li>Built APIs to meet user and product requirements</li>
@@ -495,7 +495,7 @@
       <div class="job">
         <div class="job-head">
           <div><span class="job-title">IT Onsite Support Specialist (Intern)</span> · <span class="job-company">Schlumberger</span></div>
-          <div class="job-dates">Feb 2019 – Aug 2019</div>
+          <div class="job-dates" data-start="2019-02" data-end="2019-08">Feb 2019 – Aug 2019</div>
         </div>
         <ul>
           <li>Resolved and closed incidents and service requests within allocated timelines</li>
@@ -570,5 +570,33 @@
 
   <footer>ng yi xiong — updated july 2026</footer>
 </div>
+<script>
+  function monthsBetween(start, end){
+    var s = start.split('-').map(Number);
+    var sy = s[0], sm = s[1];
+    var ey, em;
+    if(end === 'present'){
+      var now = new Date();
+      ey = now.getFullYear();
+      em = now.getMonth() + 1;
+    } else {
+      var e = end.split('-').map(Number);
+      ey = e[0]; em = e[1];
+    }
+    return (ey - sy) * 12 + (em - sm) + 1;
+  }
+  function formatDuration(totalMonths){
+    var yrs = Math.floor(totalMonths / 12);
+    var mos = totalMonths % 12;
+    var parts = [];
+    if(yrs > 0) parts.push(yrs + (yrs === 1 ? ' yr' : ' yrs'));
+    if(mos > 0 || yrs === 0) parts.push(mos + (mos === 1 ? ' mo' : ' mos'));
+    return parts.join(' ');
+  }
+  document.querySelectorAll('.job-dates[data-start]').forEach(function(el){
+    var months = monthsBetween(el.dataset.start, el.dataset.end);
+    el.textContent = el.textContent.trim() + ' · ' + formatDuration(months);
+  });
+</script>
 </body>
 </html>
